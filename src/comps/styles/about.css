@@ -1,0 +1,228 @@
+/* General Theme */
+body {
+  background-color: #1b1b1b;
+  color: #e0e0e0; /* Softer off-white for text */
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.home-page {
+  text-align: center;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Header Section */
+.header {
+  margin: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between; /* Spacing between elements */
+  width: 100%;
+  z-index: 1000;
+  height: 50px; /* Increased height for better visibility */
+  background-color: #1a1a1a; /* Dark background for dark theme */
+  border-bottom: solid 1px #333; /* Lighter border to fit dark theme */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+/* Title Styling */
+.title h1 {
+  margin: 0;
+  margin-top: 8px;
+  font-weight: bold;
+  font-size: 1.6rem;
+  color: #00e0ff; /* Bright cyan for title */
+  padding-left: 10px; /* More space from the left */
+  padding-top: 1px; /* Increased top padding for balance */
+}
+
+/* Authentication Buttons Section */
+.auth-buttons {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  
+}
+
+/* Button Styles */
+.auth-btn {
+  background: transparent;
+  color: #00e0ff; /* Cyan color for button text */
+  font-weight: bold;
+  font-size: 1.1rem;
+  border: none;
+  padding: 6px 10px; /* Added padding for better button appearance */
+  margin: 0 5px; /* Space between buttons */
+  cursor: pointer;
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transitions */
+}
+
+.auth-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle hover effect */
+  color: #ffffff; /* Change text color on hover for contrast */
+}
+
+.auth-btn:active {
+  background-color: rgba(255, 255, 255, 0.2); /* Slightly darker on click */
+}
+
+/* Carousel Styles */
+.carousel {
+  margin-top: 50px;
+  position: relative;
+  height: 500px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background-color: #252525;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+}
+
+.carousel-slide {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+  opacity: 0;
+}
+
+.carousel-slide.active {
+  transform: translateX(0);
+  opacity: 1;
+  z-index: 2;
+}
+
+.carousel-slide.prev {
+  transform: translateX(-100%);
+  opacity: 1;
+  z-index: 1;
+}
+
+.carousel-slide.next {
+  transform: translateX(100%);
+  opacity: 1;
+  z-index: 1;
+}
+
+/* Carousel Content */
+.carousel-content {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.8); /* Darker background for better readability */
+  padding: 15px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 224, 255, 0.5);
+  text-align: left;
+  color: #f5f5f5;
+  max-width: 40%;
+}
+
+.carousel-content h2 {
+  font-size: 1.8rem;
+  color: #00e0ff;
+  margin-bottom: 10px;
+}
+
+.carousel-content p {
+  font-size: 1rem;
+  color: #e0e0e0;
+}
+
+/* Navigation Buttons */
+.carousel-btn {
+  background-color: transparent;
+  font-size: 1em;
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  padding: 0;
+  border-radius: 10%;
+  transition: all 0.3s ease-in-out;
+  opacity: 1;
+}
+
+.carousel-btn:hover {
+  background-color: transparent;
+  color: white;
+  opacity: 100;
+  border: solid gray;
+  color: #00e0ff;
+  height: 50px;
+  width:  20px;
+}
+
+.carousel-btn.left {
+  left: 1px;
+}
+
+.carousel-btn.right {
+  right: 1px;
+}
+
+/* Features Section */
+.features {
+  display: flex;
+  justify-content: space-around;
+  padding: 40px 20px;
+  background-color: #202020;
+}
+
+.feature-item {
+  text-align: center;
+  width: 20%;
+  background: rgba(0, 224, 255, 0.1);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 224, 255, 0.3);
+  color: #e0e0e0;
+}
+
+.feature-icon {
+  font-size: 2em;
+  color: #00e0ff;
+  margin-bottom: 10px;
+}
+
+/* Risk Assessment Section */
+.risk-assessment {
+  padding: 20px;
+  background-color: #2a2a2a;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+  margin: 20px auto;
+  max-width: 80%;
+  color: #e0e0e0;
+}
+
+.details-btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #00e0ff;
+  color: #1b1b1b;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.details-btn:hover {
+  background-color: #1b1b1b;
+  color: #00e0ff;
+  border: 1px solid #00e0ff;
+}
