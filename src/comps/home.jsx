@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useAuth } from "./utils/AuthContext";
 
 import Spinner from './styles/spinner'
 
@@ -33,7 +33,10 @@ const featuresData = [
   }
 ];
 
-export default function About() {
+export default function Home() {
+
+  const {getUsername, logoutUser} = useAuth();
+  const username = getUsername();
 
   //const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
   const [loading, setLoading] = useState(true);
@@ -49,8 +52,6 @@ export default function About() {
     
     return () => clearTimeout(timer);
   }, []);
-
-  const nav = useNavigate();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -120,8 +121,7 @@ export default function About() {
             <h1>NeuroSwasth</h1>
           </div>
           <div className="auth-buttons">
-            <button className="auth-btn" onClick={() => nav('/login')}>Login</button>
-            <button className="auth-btn" onClick={() => nav('/signup')}>Sign Up</button>
+            <button className="auth-btn" onClick={() => logoutUser()}>LogOut</button>
           </div>
         </div>
         <div className="home-page">
@@ -142,7 +142,7 @@ export default function About() {
             <button className="carousel-btn left" onClick={goToPrev}>  ◀ </button>
             <button className="carousel-btn right" onClick={goToNext}>  ▶</button>
           </div>
-          
+          <h1>Welcome {username} !!!</h1>
           <section className="features">
               {featuresData.map((feature, index) => (
                   <div className="feature-item" key={index}>
