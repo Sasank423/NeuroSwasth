@@ -8,6 +8,7 @@ import Signup from './comps/signup';
 import About from './comps/about';
 import Error from './comps/error';
 import Home from './comps/home';
+//import Otp from './comps/otp';
 
 function App() {
   return (

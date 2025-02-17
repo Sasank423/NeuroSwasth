@@ -152,6 +152,38 @@ html, body {
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
+.sl_block img {
+    height: 180px;
+    width: 180px;
+    cursor: null;
+    margin-top: 10px;
+    margin-left: 115px;
+    margin-bottom: 10px;
+}
+
+.fileip {
+    display: none;
+    
+}
+
+.custom-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+/* Hover Effect */
+.custom-button:hover {
+    background-color: #0056b3;
+}
+
+
 .sl_button {
     width: 100%;
     height: 40px;

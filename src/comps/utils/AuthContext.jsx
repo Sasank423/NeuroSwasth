@@ -9,15 +9,18 @@ export const AuthProvider = ({children}) => {
         const [loading, setLoading] = useState(true);
         const [username, setUsername] = useState(null);
         const [email, setEmail] = useState(null);
+        const [profilePic, setProfilePic] = useState(null);
 
         useEffect(() => {
             checkUserStatus()
+            // eslint-disable-next-line
          }, [])
 
          const loginUser = async (userInfo) => {
             setLoading(true)
             setUsername(userInfo.username);
             setEmail(userInfo.email);
+            setProfilePic(userInfo.profilePic);
             navigate(`/home`, { replace: true });
 
             setLoading(false)
@@ -54,6 +57,7 @@ export const AuthProvider = ({children}) => {
                 const userInfo = await response.json();
                 setUsername(userInfo.username);
                 setEmail(userInfo.email);
+                setProfilePic(userInfo.profilePic);
                 navigate(`/home`, { replace :true })
             } catch(e) {
                 console.error(e);
@@ -70,11 +74,16 @@ export const AuthProvider = ({children}) => {
             return email;
          }
 
+         const getProfilePic = () => {
+            return profilePic;
+         }
+
         const contextData = {
             getUsername,
             getEmail,
             loginUser,
             logoutUser,
+            getProfilePic
         }
 
     return(

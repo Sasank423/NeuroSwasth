@@ -76,6 +76,7 @@ body {
 .carousel {
   margin-top: 50px;
   position: relative;
+  padding-top: 10px;
   height: 500px;
   display: flex;
   align-items: center;
@@ -177,18 +178,19 @@ body {
 
 /* Features Section */
 .features {
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:25px;
   padding: 40px 20px;
   background-color: #202020;
 }
 
 .feature-item {
   text-align: center;
-  width: 20%;
   background: rgba(0, 224, 255, 0.1);
   padding: 20px;
   border-radius: 10px;
+  height: 170px;
   box-shadow: 0 0 15px rgba(0, 224, 255, 0.3);
   color: #e0e0e0;
 }
