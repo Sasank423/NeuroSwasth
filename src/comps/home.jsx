@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "./utils/AuthContext";
 
+import { useNavigate } from "react-router-dom";
+
 import Spinner from './styles/spinner'
 
 import './styles/about.css';
@@ -74,9 +76,10 @@ const featuresData = [
 
 export default function Home() {
 
-  const {getUsername,getProfilePic} = useAuth();
+  const {getUsername} = useAuth();
   const username = getUsername();
-  const profilePic = getProfilePic();
+
+  const nav = useNavigate();
 
   //const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
   const [loading, setLoading] = useState(true);
@@ -176,10 +179,9 @@ export default function Home() {
             <button className="carousel-btn right" onClick={goToNext}>  ▶</button>
           </div>
           <h1>Welcome {username} !!!</h1>
-          <img src={profilePic} alt="Uploaded Preview" />
           <section className="features">
               {featuresData.map((feature, index) => (
-                  <div className="feature-item" key={index}>
+                  <div style={{'cursor':'pointer'}} onClick={() => nav('/chatbot')} className="feature-item" key={index}>
                     <span className="feature-icon">📄</span>
                     <h3>{feature.title}</h3>
                     <p>{feature.description}</p>

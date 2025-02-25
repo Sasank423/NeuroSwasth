@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
 
+import Header from "./header";
 import Spinner from './styles/spinner'
 
 import './styles/about.css';
@@ -90,7 +90,6 @@ export default function About() {
     return () => clearTimeout(timer);
   }, []);
 
-  const nav = useNavigate();
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
@@ -155,15 +154,8 @@ export default function About() {
 
   return (
     <div ref={divRef} tabIndex="0" onKeyDown={(e) => {if (e.key === 'ArrowRight') goToNext(); else if (e.key === 'ArrowLeft') goToPrev();}}>
-        <div className="header">
-          <div className="title">
-            <h1>NeuroSwasth</h1>
-          </div>
-          <div className="auth-buttons">
-            <button className="auth-btn" onClick={() => nav('/login')}>Login</button>
-            <button className="auth-btn" onClick={() => nav('/signup')}>Sign Up</button>
-          </div>
-        </div>
+        <Header mode={'about'}/>
+        
         <div className="home-page">
           <div className="carousel">
             {featuresData.map((feature, index) => (

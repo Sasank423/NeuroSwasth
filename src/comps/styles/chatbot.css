@@ -1,0 +1,372 @@
+.mainbox {
+    width: 100vw;
+    height: calc(100vh - 50px);
+    display: flex;
+    margin-top: 50px;
+}
+
+.sidebar {
+    height: 100%;
+    width: 20%;
+    border-right: solid 1px #333;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.msgbox {
+    height: 100%;
+    width: 80%;
+    
+    display: flex;
+    flex-direction: column;
+}
+
+.descbox {
+    height: 50px;
+    width: 100%;
+    border-bottom: solid 1px #333;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+.descbox img {
+    margin-left: 15px;
+    margin-top: 2px;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+}
+
+.descbox label {
+    color: white;
+    margin-top: 1px;
+    font-family: 'Poppins', sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.image {
+    width: 100%;
+    height: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image img {
+    width: 130px;
+    height: 130px;
+    border-radius: 100%;
+}
+
+.image img:hover {
+    border: solid 1px #333;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.chatbotnames {
+    width: 100%;
+    height: 75%;
+    
+}
+
+.inputbox {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.inputbox {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.inputbox div {
+    margin-right: 10px;
+    width: 94%;
+    height: 60px;
+    background-color: transparent;
+    border: solid 1px #333;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+    gap: 10px; 
+    overflow: hidden;
+}
+
+.inputbox div:focus-within {
+    border: solid 1px #555;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.inputbox textarea {
+    margin-top: 15px;
+    flex-grow: 1; /* Allows textarea to take available space */
+    min-height: 20px; /* Prevents it from shrinking too much */
+    max-height: 80px; /* Restricts max growth */
+    height: auto; /* Auto height */
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-size: 15px;
+    color: white;
+    padding: 5px;
+    resize: none; /* Prevents manual resizing */
+    overflow-y: auto; /* Enables scrolling when needed */
+    display: flex;
+    align-items: center; /* Helps vertical alignment */
+}
+
+.inputbox textarea::-webkit-scrollbar {
+    width: 5px; /* Thin scrollbar */
+}
+
+.inputbox textarea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.inputbox textarea::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    cursor:default;
+}
+
+.inputbox textarea::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+
+.inputbox svg {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    color: white; 
+    cursor: pointer; 
+}
+
+.inputbox  button {
+    background-color: transparent;
+    border: none;
+}
+
+.image-preview {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto; /* Enable horizontal scrolling if too many images */
+    padding: 5px;
+    margin-left: 13px;
+    max-width: 100%;
+}
+
+/* Individual Image Preview */
+.preview-item {
+    position: relative;
+    width: 50px;  /* Adjust as needed */
+    height: 50px; /* Adjust as needed */
+    border-radius: 8px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+}
+
+/* Ensure the Image is Fully Visible */
+.preview-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    display: block;
+}
+
+/* ❌ Remove Button - Now Positioned Correctly */
+.remove-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.8); /* Dark background */
+    border: none;
+    color: white;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    opacity: 0; /* Initially hidden */
+    transition: opacity 0.2s ease-in-out;
+}
+
+/* Show ❌ Button Only When Hovering Over the Image */
+.preview-item:hover .remove-btn {
+    opacity: 1;
+}
+
+.chatbotnames {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    max-height: 100vh; /* Ensures it doesn't overflow */
+    overflow-y: auto; /* Allows scrolling if needed */
+    width: 100%; /* Ensure it doesn't exceed sidebar width */
+}
+
+.chatbot-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 90%;
+    padding: 10px;
+    background-color: transparent;
+    border: solid 1px #444;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.chatbot-item:hover {
+    background-color: #333;
+    transform: scale(1.02);
+}
+
+.chatbot-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: solid 2px #555;
+}
+
+.chatbot-item h3 {
+    font-size: 1rem;
+    color: white;
+    margin: 0;
+    font-weight: 500;
+}
+
+.chatarea {
+    width: 100%;
+    height: calc(100% - 150px);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.chatarea::-webkit-scrollbar {
+    width: 7px; /* Thin scrollbar */
+}
+
+.chatarea::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.chatarea::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+    cursor:default;
+}
+
+.chatarea::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.botmsg {
+    background-color: transparent;
+    border: solid 1px #444;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    color: white;
+    padding-right: 10px;
+    width: max-content;
+    height: max-content;
+    max-width: 70%;
+    margin-left: 7px;
+    margin-top: 15px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    border-radius: 0px 32px 32px 32px;
+
+}
+
+.botmsg p {
+    margin-left: 15px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    line-height: 1.5;
+}
+
+.usermsg {
+    background-color: transparent;
+    border: solid 1px #444;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    color: white;
+    padding-left: 10px;
+    width: max-content;
+    max-width: 70%;
+    margin-left: auto;
+    margin-right: 7px;
+    margin-top: 15px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    border-radius: 32px 0px 32px 32px;
+}
+
+.usermsg p {
+    margin-right: 15px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    line-height: 1.5;
+}
+
+.typing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    margin-left: 6px;
+}
+
+.dot {
+    margin-top: 12px;
+    width: 5px;
+    height: 5px;
+    background-color: white;
+    border-radius: 50%;
+    animation: bounce 1.5s infinite ease-in-out;
+}
+
+.dot:nth-child(1) { animation-delay: 0s; }
+.dot:nth-child(2) { animation-delay: 0.2s; }
+.dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+    0%, 80%, 100% { transform: translateY(0); opacity: 0.3; }
+    40% { transform: translateY(-5px); opacity: 1; }
+}
+
+.botmsgload {
+    background-color: transparent;
+    border: solid 1px #444;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    color: white;
+    padding-right: 10px;
+    width : 50px;
+    height: 30px;
+    margin-left: 10px;
+    margin-top: 15px;
+    border-radius: 0px 32px 32px 32px;
+}

@@ -8,6 +8,8 @@ import Signup from './comps/signup';
 import About from './comps/about';
 import Error from './comps/error';
 import Home from './comps/home';
+import Profile from './comps/profile';
+import Chatbot from './comps/chatbot';
 //import Otp from './comps/otp';
 
 function App() {
@@ -20,6 +22,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route element={<PrivateRoutes />}>
             <Route path="/home" element={<Home />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/chatbot" element={<Chatbot />} />
           </Route>
           <Route path="/*" element={<Error />} />
         </Routes>

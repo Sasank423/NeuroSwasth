@@ -70,7 +70,7 @@ export default function Otp({email,type,username,otp}) {
                setLoading(true);
                show_success('Logged In Succesfully'); //add signup and login seperatly later
                await sleep(3000);
-               loginUser({username,email,'profilePic' : data.profilepic})
+               loginUser({username,email,'profilePic' : data.profilepic,'mobile':data.mobile})
                setLoading(false);
                nav('/home');
             }

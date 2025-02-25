@@ -10,6 +10,7 @@ export const AuthProvider = ({children}) => {
         const [username, setUsername] = useState(null);
         const [email, setEmail] = useState(null);
         const [profilePic, setProfilePic] = useState(null);
+        const [mobile, setMobile] = useState(null);
 
         useEffect(() => {
             checkUserStatus()
@@ -21,6 +22,7 @@ export const AuthProvider = ({children}) => {
             setUsername(userInfo.username);
             setEmail(userInfo.email);
             setProfilePic(userInfo.profilePic);
+            setMobile(userInfo.mobile);
             navigate(`/home`, { replace: true });
 
             setLoading(false)
@@ -44,6 +46,8 @@ export const AuthProvider = ({children}) => {
             }
             setUsername(null);
             setEmail(null);
+            setProfilePic(null);
+            setMobile(null);
          }
 
          const checkUserStatus = async () => {
@@ -58,6 +62,7 @@ export const AuthProvider = ({children}) => {
                 setUsername(userInfo.username);
                 setEmail(userInfo.email);
                 setProfilePic(userInfo.profilePic);
+                setMobile(userInfo.mobile);
                 navigate(`/home`, { replace :true })
             } catch(e) {
                 console.error(e);
@@ -78,12 +83,21 @@ export const AuthProvider = ({children}) => {
             return profilePic;
          }
 
+         const getMobile = () => {
+            return mobile;
+         }
+
+         const refresh = () => {
+            checkUserStatus();
+         }
         const contextData = {
             getUsername,
             getEmail,
             loginUser,
             logoutUser,
-            getProfilePic
+            getProfilePic,
+            getMobile,
+            refresh
         }
 
     return(

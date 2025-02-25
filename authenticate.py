@@ -10,7 +10,7 @@ class DB:
     def __init__(self, conn):
         self.db = conn
         self.cur = conn.cursor()
-        self.user = {'username':None, 'email':None,'profilePic':None}
+        self.user = {'username':None, 'email':None,'profilePic':None, 'mobile':None}
         self.salt = bcrypt.gensalt(rounds=12)
 
         self.server = smtplib.SMTP("smtp.gmail.com",587)
@@ -79,8 +79,11 @@ class DB:
                 self.cur.execute("SELECT profilepic FROM authentication WHERE email = %s", (email,))
                 img = self.cur.fetchone()[0]
                 img = base64.b64encode(img).decode("utf-8")
+                self.cur.execute("SELECT mobile FROM authentication WHERE email = %s", (email,))
+                mobile = self.cur.fetchone()[0]
                 self.user['profilePic'] = f"data:image/jpeg;base64,{img}"
-                return ({'status':'success','profilepic':f"data:image/jpeg;base64,{img}",'message':'OTP verified successfully'}, 200)
+                self.user['mobile'] = mobile
+                return ({'status':'success', 'mobile':mobile,'profilepic':f"data:image/jpeg;base64,{img}",'message':'OTP verified successfully'}, 200)
             if mode == 'signup':
                 self.db.commit()
                 return ({'status':'success','message':'OTP verified successfully'}, 200)
@@ -101,6 +104,18 @@ class DB:
         except Exception as e:
             self.db.rollback()
             return ({'status':'error','message':f'Failed to update profile picture: {str(e)}'}, 500)
+        
+    def update_profile(self,img,name,email,mobile):
+        query = "UPDATE authentication SET profilepic=%s, username=%s, mobile=%s WHERE email=%s"
+        values = (img, name, mobile, email)
+        self.cur.execute(query, values)
+        self.db.commit()
+        self.user['username'] = name
+        self.user['email'] = email
+        img = base64.b64encode(img).decode("utf-8")
+        self.user['profilePic'] = f"data:image/jpeg;base64,{img}"
+        self.user['mobile'] = mobile
+        return ({'status':'success','message':'Profile updated successfully'}, 200)
 
 
     

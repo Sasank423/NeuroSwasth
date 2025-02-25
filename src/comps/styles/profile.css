@@ -1,0 +1,133 @@
+.maincont {
+    margin-top:50px;
+    width: 100%;   
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: column;
+    color: #00e0ff;
+
+}
+
+.maincont h1 {
+    font-size: 3em;
+    
+}
+
+.profcont {
+    width: 700px;
+    height: 400px;
+    border-radius: 3%;
+    box-shadow: 0px 0px 10px 1px #00e0ff;
+    display: flex;
+
+}
+
+.details {
+    width: 525px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap:20px;
+}
+
+.details div {
+    margin-left: 40px;
+}
+
+.details div label {
+    display: block;
+}
+
+.profdet {
+    width: 175px;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.profdet button {
+    background-color: transparent;
+    width: max-content;
+    display: inline-block;
+    font-size: 16px;
+    padding: 10px 10px;
+    color: #00e0ff;
+    border: 2px solid #00e0ff;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 40px;
+    transition: all 0.3s ease;
+}
+
+
+
+.profdet button:hover {
+    box-shadow: 0px 0px 10px 1px #00e0ff;
+    border-color: #00b8cc;
+}
+
+.profdet button:active {
+    transform: scale(0.95);
+}
+
+.profdet img {
+    margin-right: 50px;
+    width: 180px;
+    height: 180px;
+    border-radius: 100%;
+    object-fit: cover;
+    box-shadow: 0px 0px 10px 1px #00e0ff;
+}
+
+.field {
+    font-size: 30px;
+}
+
+.value {
+    color: #00e0ff;
+    margin-top: 10px;
+    font-size: 24px;
+    border: solid 2px #00e0ff;
+    border-radius: 10px;
+    width :400px;
+    height: 40px;
+    display: flex;
+    padding-left: 10px;
+    padding-top: 10px;
+    background-color: transparent;
+}
+
+.imgcont {
+    position: relative;
+    display: inline-block;
+}
+
+
+.pencil-icon {
+    position: absolute;
+    background-color: transparent;
+    bottom: 62px;
+    right: 112px;
+    padding: 4px;
+    opacity: 0;
+    cursor: pointer;
+    color: green;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.imgcont:hover img {
+    cursor: pointer;
+    filter: blur(5px);
+}
+
+.imgcont:hover .pencil-icon {
+    cursor: pointer;
+    opacity: 1;
+}
