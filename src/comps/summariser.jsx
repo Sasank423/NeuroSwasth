@@ -7,7 +7,6 @@ import './styles/summariser.css';
 export default function Summariser() {
     const [report, setReport] = useState(null);
     const [preview, setPreview] = useState(null);
-    const [ip, setIP] = useState(true); // Default state
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -18,40 +17,30 @@ export default function Summariser() {
         }
     };
 
-    return (
-        <div>
-            <Header comp={"Medical Report Analyser"}/>
-            <div className="smainbox">
-                {ip && (
-                    <>
-                        <input id="rep" accept="image/*, application/pdf" style={{ display: 'none' }} type="file" onChange={handleFileChange} />
-                        <div className="sinput" onClick={() => document.getElementById('rep').click()}>
-                            <HardDriveUpload />
-                            <p>Upload the medical Report</p>
-                        </div>
-                    </>
-                )}
-
-                {preview && (
-                    <div className={ip ? "spreview" : "spreviewmin"}>
+    return <>
+        <Header comp={"Medical Reocrd Summariser"}/>
+        <div className="sum_main_cont">
+            <div className="sum_ip_box">
+                <h1>Upload the Medical Document</h1>
+                <div className="sum_prev">
+                    <div className="spreview">
                         {/* Image Preview */}
-                        {report?.type.startsWith("image/") && ip && <img src={preview} alt="Preview" />}
-                        {report?.type.startsWith("image/") && !ip && <p>{report.name}</p>}
+                        {report?.type.startsWith("image/") && <img src={preview} alt="Preview" />}
 
                         {/* PDF Preview */}
-                        {report?.type === "application/pdf" && ip && <iframe src={preview} width="100%" height="500px" title="PDF Preview"></iframe>}
-                        {report?.type === "application/pdf" && !ip && <p>{report.name}</p>}
-
-                        <button onClick={() => setIP(!ip)}>{ip ? "Summarise" : "Back"}</button>
+                        {report?.type === "application/pdf" && <iframe src={preview} width="100%" height="500px" title="PDF Preview"></iframe>}
+                        
                     </div>
-                )}
-
-                {!ip && (
-                    <div className="ssummary">
-                        <h1>Summary :</h1>
-                    </div>
-                )}
+                    
+                    <input id="rep" accept="image/*, application/pdf" style={{ display: 'none' }} type="file" onChange={handleFileChange} />
+                    <button title="Upload the medical Report" className="sum_ip_btn" onClick={() => document.getElementById('rep').click()}>
+                        <HardDriveUpload />
+                    </button>
+                </div>
+                <button className="sum_sub">Summarise</button>
             </div>
         </div>
-    );
+    </>
+    
+    
 }

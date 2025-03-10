@@ -1,54 +1,57 @@
-.smainbox {
+.sum_main_cont {
+    margin-top: 50px;
     width: 100vw;
     height: calc(100vh - 50px);
-    margin-top: 50px;
     display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sum_ip_box {
+    width: 650px;
+    height: 450px;
+    border: solid 1px #333;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     justify-content: flex-start;
-    align-items: center;
-    flex-direction: column;
 }
 
-.sinput {
-    margin-top: 15px;
-    min-width: 250px;
-    max-width: max-content;
-    height: 150px;
-    border: solid 1px #444;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    cursor: pointer;
+.sum_ip_box h1 {
+    color: #00e0ff;
 }
 
-.sinput:hover {
-    box-shadow: 0 1px 5px white;
-}
-
-.sinput svg {
-    width: 60%;
+.sum_prev {
+    margin-top: 2px;
     height: 60%;
-}
-
-.sinput p {
-    margin-top: 10px;
-    font-size: 14px;
-}
-
-.spreview {
-    margin-top: 20px;
-    min-width: 330px;
-    min-height: 330px;
+    width: 70%;
+    border: solid 1px #333;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    border: solid 1px #444;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 15px;
 }
+
+.sum_ip_btn {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+    top: 220px;
+    left: 405px;
+}
+
+.sum_ip_btn:hover {
+    transform: scale(1.2);
+}
+
 
 .spreview img {
     width: 240px;
@@ -64,59 +67,20 @@
     border: solid 2px black;
 }
 
-.spreview button, .spreviewmin button {
+.sum_sub {
     margin-top: 20px;
-    margin-left: 8px;
-    margin-bottom: 15px;
-    padding: 10px 20px;
+    border: solid 1px #333;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
     background-color: transparent;
     color: white;
-    border: solid 1px #444;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
+    font-weight: bold;
+    font-size: medium;
+    width: 30%;
+    height: 10%;
     cursor: pointer;
 }
 
-.spreview button:hover, .spreviewmin button:hover {
-    box-shadow: 0 1px 5px white;
-    transform: scale(1.05);
-}
-
-.spreviewmin {
-    margin-top: 20px;
-    min-width: 60%;
-    min-height: 165px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    border: solid 1px #444;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 15px;
-
-}
-
-.spreviewmin img {
-    margin-top: 10px;
-    width: 120px;
-    height: 120px;
-    border-radius: 15px;
-    border: solid 2px black;
-}
-
-.spreviewmin p {
-    padding-left: 20px;
-    padding-right: 20px;
-    font-weight: bold;
-    font-size: large;
-}
-
-.ssummary {
-    margin-top: 20px;
-    width: 60%;
-    min-height: 70%;
-    max-height: max-content;
-    border: solid 1px #444;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-    border-radius: 5px;
+.sum_sub:hover {
+    transform: scale(1.1);
 }
