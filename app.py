@@ -5,6 +5,7 @@ import bcrypt
 import mysql.connector
 from random import randint
 import smtplib
+from io import BytesIO
 
 from authenticate import DB
 
@@ -52,8 +53,26 @@ def profilepic():
 
 @app.route('/update/profile',methods=['POST'])
 def updateprofile():
-    img, name, email, mobile = request.files["image"] ,request.form["name"], request.form["email"], request.form["mobile"]
-    res = db.update_profile(img.stream.read(),name,email,mobile)
+    name, email, mobile, change = request.form["name"], request.form["email"], request.form["mobile"], request.form['change']
+    if 'image' not in request.files or change == 'no':
+        res = db.update_profile(None,name,email,mobile)
+    else:
+        img = request.files["image"]
+        res = db.update_profile(img.stream.read(),name,email,mobile)
+    return jsonify(res[0]), res[1]
+
+@app.route('/upload/file', methods=['POST'])
+def upload_file():
+    if "file" not in request.files:
+        return jsonify({"error": "No file uploaded"}), 400
+    
+    file, name, type = BytesIO(request.files["file"].read()), request.form["name"], request.form["type"]
+    res = db.upload_file(file, name, type)
+    return jsonify(res[0]), res[1]
+
+@app.route('/get/pdf', methods=['POST'])
+def get_pdf():
+    res = db.files_extract()
     return jsonify(res[0]), res[1]
     
 @app.route('/logout', methods=['POST'])
@@ -62,6 +81,7 @@ def logout():
     db.user['email'] = None
     db.user['profilePic'] = None
     db.user['mobile'] = None
+    db.userid = ''
     return jsonify({'status':'success','message':'User logged out successfully'}), 200
 
     

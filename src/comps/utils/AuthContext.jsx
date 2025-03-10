@@ -7,10 +7,12 @@ const AuthContext = createContext()
 export const AuthProvider = ({children}) => {
         const navigate = useNavigate();
         const [loading, setLoading] = useState(true);
-        const [username, setUsername] = useState(null);
+        const [username, setUsername] = useState('sas'); //change
         const [email, setEmail] = useState(null);
         const [profilePic, setProfilePic] = useState(null);
         const [mobile, setMobile] = useState(null);
+
+        const [notif, setNotif] = useState({'success': false, 'error': false, 'notif': false, 'msg': ''});
 
         useEffect(() => {
             checkUserStatus()
@@ -51,6 +53,7 @@ export const AuthProvider = ({children}) => {
          }
 
          const checkUserStatus = async () => {
+            setLoading(true);
             try {
                 const response = await fetch('http://127.0.0.1:5000/status', {
                   method: 'GET',
@@ -87,9 +90,33 @@ export const AuthProvider = ({children}) => {
             return mobile;
          }
 
-         const refresh = () => {
-            checkUserStatus();
+         const refresh = async (notif) => {
+            setLoading(true);
+            try {
+                const response = await fetch('http://127.0.0.1:5000/status', {
+                  method: 'GET',
+                });
+                if(!response.ok){
+                    console.error('Network Issue');
+                }
+                const userInfo = await response.json();
+                setUsername(userInfo.username);
+                setEmail(userInfo.email);
+                setProfilePic(userInfo.profilePic);
+                setMobile(userInfo.mobile);
+                setNotif(notif);
+            } catch(e) {
+                console.error(e);
+            }
+            
+            setLoading(false)
          }
+
+         const getNotif = () => {
+                return notif;
+         }
+
+
         const contextData = {
             getUsername,
             getEmail,
@@ -97,6 +124,8 @@ export const AuthProvider = ({children}) => {
             logoutUser,
             getProfilePic,
             getMobile,
+            getNotif,
+            setNotif,
             refresh
         }
 

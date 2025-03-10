@@ -7,7 +7,7 @@ import "./styles/header.css";
 
 import { useAuth } from "./utils/AuthContext";
 
-export default function Header({mode}) {
+export default function Header({mode, comp}) {
 
     const nav = useNavigate();
     const {logoutUser,getProfilePic} = useAuth();
@@ -22,7 +22,7 @@ export default function Header({mode}) {
                         <h1>NeuroSwasth</h1>
                     </div>
                     <div className="aauth-buttons">
-                        <button className="aauth-btn" onClick={() => nav('/login')}>Login</button>
+                        <button className="aauth-btn" onClick={() => {localStorage.setItem('login','true');nav('/login')}}>Login</button>
                         <button className="aauth-btn" onClick={() => nav('/signup')}>Sign Up</button>
                     </div>
                   </div>);
@@ -35,6 +35,7 @@ export default function Header({mode}) {
                     <img src={logo} alt="Logo"/>
                     <h1>NeuroSwasth</h1>
                 </div>
+                <label className="feature-name">{comp}</label>
                 <div className="auth-buttons">
                     <label onClick={() => nav('/home')}>Home</label>
                     <Bell className="bell" size={20} />

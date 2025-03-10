@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./utils/AuthContext";
 import Spinner from "./styles/spinner";
 import Otp from "./otp";
 
@@ -9,6 +10,8 @@ import './styles/login.css';
 
 export default function Login() {
     const nav = useNavigate();
+
+    const {setNotif} = useAuth();
 
     const [loading, setLoading] = useState(true);
 
@@ -47,6 +50,7 @@ export default function Login() {
                 setOTPstate(true);
                 setUsername(data.username);
                 setOTP(data.otp);
+                setNotif((t) => ({...t, notif:true,msg:'OTP sent successfully'}))
               }
               else{
                 throw new Error(data.message);
@@ -72,7 +76,7 @@ export default function Login() {
                 <h1>NeuroSwasth</h1>
             </div>
             <div className="sl_cont-box">
-                <label className="sl_header">Log In</label>
+                <label onKe className="sl_header">Log In</label>
                 <label className="sl_capt">Access your medical account securely</label>
                 <form onSubmit={handleSubmit}>
                     <div className="sl_block">

@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pencil } from 'lucide-react';
-import {show_error, show_info, show_success} from './utils/Alerts';
+import show_msg, { show_info } from './utils/Alerts';
 import { ToastContainer } from 'react-toastify';
 import Spinner from './styles/spinner';
 
@@ -13,7 +13,7 @@ import './styles/profile.css'
 
 export default function Profile() {
 
-    const {refresh, getUsername, getEmail, getMobile, getProfilePic} = useAuth();
+    const {refresh, getUsername, getEmail, getMobile, getProfilePic, setNotif, getNotif} = useAuth();
 
     const [loading, setLoading] = useState(false);
  
@@ -24,12 +24,17 @@ export default function Profile() {
     const email = getEmail();
     const [phone, setPhone] = useState(getMobile());
 
+    const [picChange, setPicChange] = useState('no');
+
+    const showToast = getNotif();
+
     const handleFileChange = (event) => {
         console.log(image);
         const file = event.target.files[0];
         if (file) {
           setImage(file);
           setPreview(URL.createObjectURL(file));
+          setPicChange('yes');
         }
     };
 
@@ -41,23 +46,30 @@ export default function Profile() {
         formData.append("email", email);
         formData.append("mobile", phone);
         formData.append("name",name);
+        formData.append('change',picChange)
         try {
             const response = await fetch("http://127.0.0.1:5000/update/profile", {
                 method: "POST",
                 body: formData,
             });
-            setLoading(false);
             const data = await response.json();
+            setLoading(false);
             if (data.status === "success") {
-                show_success("Profile picture updated successfully");
                 setEdit(false);
+                refresh({success: true, error: false, notif: false, msg: "Profile updated successfully"});
             }
         }catch (error) {
-            show_error("Error uploading file:", error);
+            refresh({success: false, error: true, notif: false, msg: "Error updating profile"});
         }
-        setLoading(false);
-        refresh();
     }
+
+    useEffect(() => {
+        const show = show_msg(showToast);
+        if(show) {
+            show(showToast.msg);
+            setNotif({success: false, error: false, notif: false, msg: ""});
+        }
+    }, );
 
     if(loading) {
         return <Spinner />;

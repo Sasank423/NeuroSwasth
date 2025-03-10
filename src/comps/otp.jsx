@@ -4,7 +4,8 @@ import { ToastContainer } from 'react-toastify';
 import { useAuth } from './utils/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-import {show_success, show_error} from './utils/Alerts';
+import show_msg from './utils/Alerts';
+
 import Spinner from "./styles/spinner";
 
 import img from "./props/hrt.png";
@@ -16,6 +17,10 @@ export default function Otp({email,type,username,otp}) {
   const [profilepic,setProfilePic] = useState(ppic);
   const [preview, setPreview] = useState(ppic);
   const [pp, setPP] = useState(false);  //change to false
+
+  const [showToast, setShowToast] = useState([false, '']);
+
+  const { loginUser, setNotif, getNotif } = useAuth();
 
   const nav = useNavigate();
 
@@ -29,13 +34,17 @@ export default function Otp({email,type,username,otp}) {
           
           const timer = setTimeout(() => {
               setLoading(false);
+              const notif  = getNotif();
+              const show = show_msg(notif);
+              if(show) {
+                setShowToast([show, notif.msg])
+              }
+              setNotif({success: false, error: false, notif: false, msg: ""});
           }, delayMilliseconds);
       
           
           return () => clearTimeout(timer);
-        }, []);
-  
-    const {loginUser} = useAuth();
+        }, );
   
     const [enteredotp, setEnteredOTP] = useState('');
 
@@ -54,6 +63,14 @@ export default function Otp({email,type,username,otp}) {
       };
     }, []);
 
+    useEffect(() => {
+        if (showToast[0]) {
+          showToast[0](showToast[1]);
+          setShowToast([false, '']);
+        }
+    
+    }, [showToast]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
@@ -68,15 +85,14 @@ export default function Otp({email,type,username,otp}) {
             const data = await response.json();
             if(data.status === "success" && type === 'login'){
                setLoading(true);
-               show_success('Logged In Succesfully'); //add signup and login seperatly later
                await sleep(3000);
                loginUser({username,email,'profilePic' : data.profilepic,'mobile':data.mobile})
                setLoading(false);
+               setNotif((t) => ({ ...t, success: true, msg: 'Login Successful' }));
                nav('/home');
             }
             else if(data.status === "success" && type ==='signup'){
               setLoading(true);
-              show_success('Account Created Succesfully');
               await sleep(3000);
               setLoading(false);
               setPP(true);
@@ -86,7 +102,7 @@ export default function Otp({email,type,username,otp}) {
               throw new Error(data.message);
             }
       } catch (error) {
-          show_error(error.message);
+          
       }        
     }
 
@@ -114,7 +130,6 @@ export default function Otp({email,type,username,otp}) {
   
         const data = await response.json();
         if (data.status === "success") {
-          show_success("Profile picture updated successfully");
           await sleep(3000);
           setPP(false);
           nav('/login');

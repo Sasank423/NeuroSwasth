@@ -3,7 +3,12 @@ import mysql.connector
 from random import randint
 import smtplib
 import base64
+import boto3
+import os
 
+from pdf2image import convert_from_bytes
+import requests
+from io import BytesIO
 
 
 class DB:
@@ -11,15 +16,39 @@ class DB:
         self.db = conn
         self.cur = conn.cursor()
         self.user = {'username':None, 'email':None,'profilePic':None, 'mobile':None}
+        self.userid = '' # change to ''
         self.salt = bcrypt.gensalt(rounds=12)
 
-        self.server = smtplib.SMTP("smtp.gmail.com",587)
-        self.server.starttls()
-        self.server.login('neuroswasth@gmail.com','zbtknqbishkbajms')
-        self.db.start_transaction()
+        self.data = None
+        self.res = None
+        
+        self.s3_client = boto3.client('s3')
+        self.bucket_mapping = {
+                            "ct": "neuro-swasth-imaging-ct",
+                            "mri": "neuro-swasth-imaging-mri",
+                            "xray": "neuro-swasth-imaging-xray",
+                            "ultrasound": "neuro-swasth-imaging-ultrasound",
+                            "kft": "neuro-swasth-lab-kft",
+                            "lft": "neuro-swasth-lab-lft",
+                            "cbp": "neuro-swasth-lab-cbp",
+                            "bloodglucose": "neuro-swasth-lab-blood-glucose",
+                            "lipidprofile": "neuro-swasth-lab-lipid-profile",
+                            "ecg": "neuro-swasth-cardiology-ecg",
+                            "eeg": "neuro-swasth-cardiology-eeg",
+                            "echo": "neuro-swasth-cardiology-echo",
+                            "histopathologyreport": "neuro-swasth-histopathology-reports"
+                        }
+        try:
+            self.server = smtplib.SMTP("smtp.gmail.com",587)
+            self.server.starttls()
+            self.server.login('neuroswasth@gmail.com','zbtknqbishkbajms')
+            self.db.start_transaction()
+        except:
+            pass
 
     def send_otp(self,email,mode,user):
         otp = randint(100000, 999999)
+        print(otp)
         if mode == 'signup':
             message = f'''Subject: OTP Verification\n\nGreetings {user},\n\nThank you for signing up to our services. Here is your 6-digit OTP for verification to complete the registration: {otp}'''
         else:
@@ -82,7 +111,8 @@ class DB:
                 self.cur.execute("SELECT mobile FROM authentication WHERE email = %s", (email,))
                 mobile = self.cur.fetchone()[0]
                 self.user['profilePic'] = f"data:image/jpeg;base64,{img}"
-                self.user['mobile'] = mobile
+                self.cur.execute("SELECT userid FROM authentication WHERE email = %s", (email,))
+                self.userid = self.cur.fetchone()[0]
                 return ({'status':'success', 'mobile':mobile,'profilepic':f"data:image/jpeg;base64,{img}",'message':'OTP verified successfully'}, 200)
             if mode == 'signup':
                 self.db.commit()
@@ -106,18 +136,72 @@ class DB:
             return ({'status':'error','message':f'Failed to update profile picture: {str(e)}'}, 500)
         
     def update_profile(self,img,name,email,mobile):
-        query = "UPDATE authentication SET profilepic=%s, username=%s, mobile=%s WHERE email=%s"
-        values = (img, name, mobile, email)
+        if img is not None:
+            query = "UPDATE authentication SET profilepic=%s, username=%s, mobile=%s WHERE email=%s"
+            values = (img, name, mobile, email)
+            self.cur.execute(query, values)
+            img = base64.b64encode(img).decode("utf-8")
+            self.user['profilePic'] = f"data:image/jpeg;base64,{img}"
+        else:
+            query = "UPDATE authentication SET username=%s, mobile=%s WHERE email=%s"
+            values = (name, mobile, email)
+            
         self.cur.execute(query, values)
         self.db.commit()
         self.user['username'] = name
         self.user['email'] = email
-        img = base64.b64encode(img).decode("utf-8")
-        self.user['profilePic'] = f"data:image/jpeg;base64,{img}"
         self.user['mobile'] = mobile
         return ({'status':'success','message':'Profile updated successfully'}, 200)
-
-
     
+    def upload_file(self, file , file_name, pdf_type):
+        pdf_type = pdf_type.replace(' ','').lower()
+        
+        bucket_name = self.bucket_mapping[pdf_type]
+        bucket_id = list(self.bucket_mapping.keys()).index(pdf_type) + 1
+
+        try:
+            self.s3_client.upload_fileobj(file, bucket_name, file_name)
+            file_url = f"https://{bucket_name}.s3.amazonaws.com/{file_name}"
+            query = "insert into records (userid, bucketid, url, filename) values(%s, %s, %s, %s)"
+            self.cur.execute(query, (self.userid, bucket_id, file_url, file_name)) #change to self.userid
+            self.db.commit()
+            return ({'status':'success'}, 200)
+        except Exception as e:
+            print(e)
+            return ({'status':'error'},401)
+        
+    def files_extract(self):
+        self.cur.execute('SELECT * FROM records WHERE userid = %s ORDER BY fileid ASC', ([self.userid]))
+        data = self.cur.fetchall()
+        if self.data is None:
+            self.data = data
+        elif self.data == data:
+            return ({'data': self.res}, 200)
+
+        self.res = []
+        for i in self.data:
+            bucket = list(self.bucket_mapping.keys())[i[1]-1]
+            img = self.extract_photo(i[-2])
+            self.res.append({'bucket': bucket, 'image': img, 'url': i[-2], 'fname': i[-1], 'hovered': False})
+
+        return ({'data': self.res},200)
+        
+    def extract_photo(self,url):
+        response = requests.get(url)
+        if response.status_code != 200:
+            return ("Failed to download PDF", 400)
+
+        images = convert_from_bytes(response.content, first_page=1, last_page=1)
+        img_io = BytesIO()
+        images[0].save(img_io, format="PNG")
+        img_base64 = base64.b64encode(img_io.getvalue()).decode("utf-8")
+        return f"data:image/png;base64,{img_base64}"
+
+        
+
+
+if __name__ == "__main__":
+    db = DB(mysql.connector.connect(host='localhost',user='root',password='HinokamiKagura@13',database='NeuroSwasth'))
+    db.files_extract()
 
     

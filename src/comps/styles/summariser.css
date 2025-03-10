@@ -1,0 +1,122 @@
+.smainbox {
+    width: 100vw;
+    height: calc(100vh - 50px);
+    margin-top: 50px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+}
+
+.sinput {
+    margin-top: 15px;
+    min-width: 250px;
+    max-width: max-content;
+    height: 150px;
+    border: solid 1px #444;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.sinput:hover {
+    box-shadow: 0 1px 5px white;
+}
+
+.sinput svg {
+    width: 60%;
+    height: 60%;
+}
+
+.sinput p {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.spreview {
+    margin-top: 20px;
+    min-width: 330px;
+    min-height: 330px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: solid 1px #444;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+}
+
+.spreview img {
+    width: 240px;
+    height: 240px;
+    border-radius: 15px;
+    border: solid 2px black;
+}
+
+.spreview iframe {
+    width: 240px;
+    height: 240px;
+    border-radius: 15px;
+    border: solid 2px black;
+}
+
+.spreview button, .spreviewmin button {
+    margin-top: 20px;
+    margin-left: 8px;
+    margin-bottom: 15px;
+    padding: 10px 20px;
+    background-color: transparent;
+    color: white;
+    border: solid 1px #444;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.spreview button:hover, .spreviewmin button:hover {
+    box-shadow: 0 1px 5px white;
+    transform: scale(1.05);
+}
+
+.spreviewmin {
+    margin-top: 20px;
+    min-width: 60%;
+    min-height: 165px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: solid 1px #444;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+
+}
+
+.spreviewmin img {
+    margin-top: 10px;
+    width: 120px;
+    height: 120px;
+    border-radius: 15px;
+    border: solid 2px black;
+}
+
+.spreviewmin p {
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: bold;
+    font-size: large;
+}
+
+.ssummary {
+    margin-top: 20px;
+    width: 60%;
+    min-height: 70%;
+    max-height: max-content;
+    border: solid 1px #444;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 5px;
+}

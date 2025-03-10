@@ -65,7 +65,7 @@ export default function Chatbot() {
 
     return (
         <>
-            <Header />
+            <Header comp={'ChatBot'}/>
             <div className="mainbox">
                 <div className="sidebar">
                     <div className="image">

@@ -61,6 +61,7 @@ body {
 
 /* Carousel Content */
 .carousel-content {
+  
   position: absolute;
   bottom: 20px;
   left: 20px;
@@ -137,9 +138,9 @@ body {
 }
 
 .feature-icon {
-  font-size: 2em;
+  font-size: 3em;
   color: #00e0ff;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
 }
 
 /* Risk Assessment Section */

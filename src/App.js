@@ -10,7 +10,8 @@ import Error from './comps/error';
 import Home from './comps/home';
 import Profile from './comps/profile';
 import Chatbot from './comps/chatbot';
-//import Otp from './comps/otp';
+import Summariser from './comps/summariser';
+import RecordDB from './comps/recorddb';
 
 function App() {
   return (
@@ -18,12 +19,15 @@ function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<About />} />
+          <Route path="/about" element={<About />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route element={<PrivateRoutes />}>
             <Route path="/home" element={<Home />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/chatbot" element={<Chatbot />} />
+            <Route path="/summariser" element={<Summariser />} />
+            <Route path="/recorddb" element={<RecordDB />} />
           </Route>
           <Route path="/*" element={<Error />} />
         </Routes>
