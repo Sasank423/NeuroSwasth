@@ -18,7 +18,7 @@ function App() {
     <Router>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<Summariser />} />
+          <Route path="/" element={<About />} />
           <Route path="/about" element={<About />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />

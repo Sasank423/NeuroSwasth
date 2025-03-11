@@ -18,7 +18,7 @@ export default function Summariser() {
     };
 
     return <>
-        <Header comp={"Medical Reocrd Summariser"}/>
+        <Header comp={"Medical Record Summarizer"}/>
         <div className="sum_main_cont">
             <div className="sum_ip_box">
                 <h1>Upload the Medical Document</h1>

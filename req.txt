@@ -1,0 +1,7 @@
+bcrypt
+mysql-connector-python
+boto3
+pdf2image
+requests
+flask
+flask-cors
