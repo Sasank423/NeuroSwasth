@@ -85,7 +85,7 @@ export default function Chatbot() {
 
             const getHist = async () => {
                 try {
-                    const response = await fetch('http://127.0.0.1:5000/get/hist', {
+                    const response = await fetch('api/get/hist', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -139,7 +139,7 @@ export default function Chatbot() {
             });
             const data = await response.json();
             try {
-                const response = await fetch('http://127.0.0.1:5000/set/hist', {
+                const response = await fetch('api/set/hist', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

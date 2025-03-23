@@ -24,19 +24,19 @@ class DB:
         
         self.s3_client = boto3.client('s3')
         self.bucket_mapping = {
-                            "ct": "neuro-swasth-imaging-ct",
-                            "mri": "neuro-swasth-imaging-mri",
-                            "xray": "neuro-swasth-imaging-xray",
-                            "ultrasound": "neuro-swasth-imaging-ultrasound",
-                            "kft": "neuro-swasth-lab-kft",
-                            "lft": "neuro-swasth-lab-lft",
-                            "cbp": "neuro-swasth-lab-cbp",
-                            "bloodglucose": "neuro-swasth-lab-blood-glucose",
-                            "lipidprofile": "neuro-swasth-lab-lipid-profile",
-                            "ecg": "neuro-swasth-cardiology-ecg",
-                            "eeg": "neuro-swasth-cardiology-eeg",
-                            "echo": "neuro-swasth-cardiology-echo",
-                            "histopathologyreport": "neuro-swasth-histopathology-reports"
+                            "ct": "neuro-swasth-imaging-ct-v1",
+                            "mri": "neuro-swasth-imaging-mri-v1",
+                            "xray": "neuro-swasth-imaging-xray-v1",
+                            "ultrasound": "neuro-swasth-imaging-ultrasound-v1",
+                            "kft": "neuro-swasth-lab-kft-v1",
+                            "lft": "neuro-swasth-lab-lft-v1",
+                            "cbp": "neuro-swasth-lab-cbp-v1",
+                            "bloodglucose": "neuro-swasth-lab-blood-glucose-v1",
+                            "lipidprofile": "neuro-swasth-lab-lipid-profile-v1",
+                            "ecg": "neuro-swasth-cardiology-ecg-v1",
+                            "eeg": "neuro-swasth-cardiology-eeg-v1",
+                            "echo": "neuro-swasth-cardiology-echo-v1",
+                            "histopathologyreport": "neuro-swasth-histopathology-reports-v1"
                         }
         try:
             self.server = smtplib.SMTP("smtp.gmail.com",587)
