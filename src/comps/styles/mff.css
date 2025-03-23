@@ -1,0 +1,201 @@
+.mffmain_box {
+    margin-top: 50px;
+    width: 100vw;
+    height: calc(100vh - 50px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mffip {
+    margin-top: 2%;
+    width: 50%;
+    height: 12%;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    position: relative;
+}
+
+.mffip label {
+    position: absolute;
+    top: -7px;
+    left: 75px;
+    font-size: 15px;
+}
+
+.mffip input {
+    background-color: transparent;
+    border: solid 1px #333;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    width: 70%;
+    height: 40%;
+    color: white;
+}
+
+.mffip button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    margin-left: 2px;
+    margin-top: 4px;
+    cursor: pointer;
+}
+
+.mffop {
+    width: 80%;
+    height: 80%;
+    background-color: transparent;
+    border: solid 1px #333;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    overflow-y: auto;
+}
+
+.mffop::-webkit-scrollbar {
+    width: 6px;
+}
+
+.mffop::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); /* Slightly visible track */
+}
+
+.mffop::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+}
+
+.mffop::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+
+.mffopitem {
+    margin-top: 2%;
+    margin-left: 2%;
+    width: 17%;
+    height: 42%;
+    background-color: transparent;
+    border: solid 1px #333;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+}
+
+
+.mffopitem img {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+}
+
+.mffinfo {
+    position: absolute;
+    width: 100%;
+    height: 25%;
+    background-color: rgba(0, 0, 0, 0.6);
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.mffinfohovered {
+    position: absolute;
+    width: 100%;
+    height: 25%;
+    background-color: rgba(0, 0, 0, 0.6);
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    filter: blur(2px);
+}
+
+.mffinfo label, .mffinfohovered label {
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.mffrat {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    background-color: green;
+    border-radius: 7px;
+    width: 25%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mffrathovered {
+    position: absolute;
+    right: 2px;
+    top: 2px;
+    background-color: green;
+    border-radius: 7px;
+    width: 25%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: blur(2px);
+}
+
+
+.mffrat label , .mffrathovered label {
+    margin-top: 1px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.mffrat svg , .mffrathovered svg {
+    margin-right: 3px;
+    width: 13px;
+    height: 13px;
+    fill: white;
+}
+
+
+.mffhovered {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    filter: blur(2px);
+    cursor: auto;
+}
+
+.mffredir {
+    position: absolute;
+    width: 80px;
+    height: 32px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    z-index: 1;
+    top: 40%;
+    left: 30%;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.mffredir:hover {
+    transform: scale(1.05);    
+}

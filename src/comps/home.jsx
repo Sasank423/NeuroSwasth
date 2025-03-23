@@ -65,13 +65,15 @@ const featuresData = [
       "feature": "Healthy Facility Finder",
       "description": "Locate nearby hospitals, clinics, and fitness centers based on your needs.",
       "img": "https://t4.ftcdn.net/jpg/03/01/46/11/360_F_301461106_EXXsPkG6yiOPO4Lb2mGyzNjkcWIg39w7.jpg",
-      "icon" : <Search />
+      "icon" : <Search />,
+      "route" : '/mff'
   },
   {
       "feature": "School of Fundamentals",
       "description": "Access educational content on health, wellness, and medical fundamentals.",
       "img": "https://www.shutterstock.com/image-photo/hand-touching-high-tech-global-600nw-2323228599.jpg",
-      "icon" : <BookOpen />
+      "icon" : <BookOpen />,
+      "route" : '/sof'
   },
   {
       "feature": "Online Medicine Shopping ",
@@ -217,7 +219,7 @@ export default function Home() {
               {featuresData.map((feature, index) => (
                   <div style={{'cursor':'pointer'}} onClick={() => nav(feature.route ? feature.route : '/home')} className="feature-item" key={index}>
                     <span className="feature-icon">{feature.icon}</span>
-                    <h3>{feature.title}</h3>
+                    <h3>{feature.feature}</h3>
                     <p>{feature.description}</p>
                   </div>
               ))}

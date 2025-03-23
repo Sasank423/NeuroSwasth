@@ -196,12 +196,32 @@ class DB:
         images[0].save(img_io, format="PNG")
         img_base64 = base64.b64encode(img_io.getvalue()).decode("utf-8")
         return f"data:image/png;base64,{img_base64}"
+    
+    def chatbot(self,cid):
+        query = "SELECT user,reply FROM history WHERE userid = %s and chatbotID = %s ORDER BY messageID ASC"
+        self.cur.execute(query, (self.userid, cid))
+        d = self.cur.fetchall()
+        if d == []:
+            return {'user': [],'reply': [],'status': 'empty'}
+        user = []
+        reply = []
+        for i in d:
+            user.append(i[0])
+            reply.append(i[1])
 
+        return {'user': user, 'reply': reply, 'status': 'ok'}
+    
+    def history_update(self,id , user, reply):
+        self.userid = 1
+        q = 'INSERT INTO history (userID, chatbotID, user, reply) VALUES(%s, %s, %s, %s)'
+        self.cur.execute(q, (self.userid, id, user, reply))
+        self.db.commit()
+        return {'status':'success'}
         
 
 
 if __name__ == "__main__":
     db = DB(mysql.connector.connect(host='localhost',user='root',password='HinokamiKagura@13',database='NeuroSwasth'))
-    db.files_extract()
+    print(db.history_update(0,'hi','hlo how are you'))
 
     

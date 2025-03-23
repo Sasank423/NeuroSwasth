@@ -74,6 +74,18 @@ def upload_file():
 def get_pdf():
     res = db.files_extract()
     return jsonify(res[0]), res[1]
+
+@app.route('/get/hist',methods=['POST'])
+def get_hist():
+    data = request.json
+    dt = db.chatbot(data['id'])
+    return jsonify(dt),200
+
+@app.route('/set/hist', methods=['POST'])
+def set_hist():
+    data = request.json
+    res = db.history_update(data['id'], data['user'], data['reply'])
+    return jsonify(res), 200
     
 @app.route('/logout', methods=['POST'])
 def logout():

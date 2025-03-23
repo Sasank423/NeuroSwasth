@@ -10,20 +10,48 @@ import './styles/chatbot.css';
 
 const chatbots = [
     {
-        name : 'Nephrology', 
-        description : 'Expert in nephrology, including dialysis, kidney transplantation, and kidney disease management.',
-        image : neph
-    }, 
-    {
-        name : 'Gynaecology',
-        description : 'Expert in gynaecology, including obstetrics, gynecological oncology, and endometrial cancer screening.',
+        id : 0,
+        name : 'Gynaecologist',
+        description : "Hi, I’m GynoCare AI, your gynecology assistant. I’m here to help you with any women's reproductive health-related concerns. Can you tell me your name, age, and gender?",
         image : gyna
     },
     {
+        id : 1,
+        name : 'Gastrologist',
+        description : "Hi, I’m GastroAssist AI, your gastroenterology assistant. I’m here to help you with any digestive system-related concerns. Can you tell me your name, age, and gender?",
+        image : gyna
+    },
+    {
+        id : 2,
+        name : 'Neurologist',
+        description : "Hi, I’m NeuroAssist AI, your neurology assistant. I’m here to help you with any brain, spine, or nervous system-related concerns. Can you tell me your name, age, and gender?",
+        image : gyna
+    },
+    {
+        id : 3,
         name : 'Pediatrication',
-        description : 'Expert in pediatric care, including diabetes, hypertension, and mental health conditions.',
+        description : "Hi, I’m PediCare AI, your pediatric assistant. I’m here to help you with any concerns about your child's health. Can you tell me your child's name, age, and gender?",
+        image : pedi
+    },
+    {
+        id : 4,
+        name : 'Nephrology', 
+        description : "Hi, I’m NephroAssist AI, your nephrology assistant. I’m here to help you with any kidney or renal-related concerns. Can you tell me your name, age, and gender?",
+        image : neph
+    }, 
+    {
+        id : 5,
+        name : 'Pulmonologist',
+        description : "Hi, I’m PulmoCare AI, your pulmonology assistant. I’m here to help you with any lung or breathing-related concerns. Can you tell me your name, age, and gender?",
+        image : pedi
+    },
+    {
+        id : 6,
+        name : 'Cardiologist',
+        description : "Hi, I’m CardioConsult AI, your cardiology assistant. I’m here to help you with any heart-related concerns. Can you tell me your name, age, and gender?",
         image : pedi
     }
+    
 ]
 
 export default function Chatbot() {
@@ -37,8 +65,51 @@ export default function Chatbot() {
     const [processing,setProcessing] = useState(false);
 
     useEffect(() => {
-            setBotMsg([`Welcome to our chatbot! Our expertise includes ${current.description}`]);
-            setUserMsg([]);
+            const change = async () => {
+                try {
+                    const response = await fetch('https://7179-35-153-74-121.ngrok-free.app/set/bot', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            id : current.id
+                        }),
+                    });
+                    const data = await response.json();
+                    console.log(data);
+                } catch (e) {
+                    console.error('Error:', e);
+                }
+            }
+
+            const getHist = async () => {
+                try {
+                    const response = await fetch('http://127.0.0.1:5000/get/hist', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ id: current.id})
+                      });
+                      
+                      const data = await response.json();
+                      if(data.status === 'ok'){
+                        setBotMsg([current.description,...data.reply]);
+                        setUserMsg(data.user);
+                      } else {
+                        setBotMsg([`${current.description}`]);
+                        setUserMsg([]);
+                      }
+                      
+                } catch (error) {
+                    alert(error.message);
+                }
+            }
+
+            change();
+            getHist();           
+
     },[current]);
 
     const handleImageUpload = (event) => {
@@ -56,12 +127,39 @@ export default function Chatbot() {
         setProcessing(true);
         setUserMsg((prev) => [...prev, msg]);
         setMsg('');
-        await sleep(3000);
-        setBotMsg((prev) => [...prev, `Done processing`]);
+        try {
+            const response = await fetch('https://7179-35-153-74-121.ngrok-free.app/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    msg: msg
+                }),
+            });
+            const data = await response.json();
+            try {
+                const response = await fetch('http://127.0.0.1:5000/set/hist', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ id: current.id, user: msg, reply: data.reply})
+                });
+                const data = await response.json();
+                console.log(data);
+            } catch (err) {
+                console.error('Error:', err);
+            }
+            setBotMsg((prev) => [...prev, data.reply]);
+        } catch (e) {
+            console.error('Error:', e);
+        }
+        
         setProcessing(false);
     }
 
-    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+    //const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
     return (
         <>
