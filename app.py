@@ -14,19 +14,19 @@ db = DB(mysql.connector.connect(host='localhost',user='root',password='HinokamiK
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/login', methods=['POST'])
+@app.route('/api/login', methods=['POST'])
 def login():
     data = request.json
     res = db.login(email=data['email'], password=data['password'].encode('utf-8'))
     return jsonify(res[0]), res[1]
 
-@app.route('/signup', methods=['POST'])
+@app.route('/api/signup', methods=['POST'])
 def signup():
     data = request.json
     res = db.signup(email=data['email'], password=data['password'].encode('utf-8'),username=data['username'],mobile=data['mobile'])
     return jsonify(res[0]), res[1]
     
-@app.route('/otp', methods=['POST'])
+@app.route('/api/otp', methods=['POST'])
 def otp():
     data = request.json
     res = db.otp(enteredotp=str(data['enteredotp']), mode=data['mode'],otp=data['otp'],username=data['username'],email=data['email'])
@@ -34,14 +34,14 @@ def otp():
     
 
 
-@app.route('/status', methods=['GET'])
+@app.route('/api/status', methods=['GET'])
 def status():
     if db.user['username'] != None:
         return jsonify(db.user),200
     else:
         return jsonify({'status':'fail','message':'User not logged in'}), 401
 
-@app.route('/profilepic',methods=['POST'])
+@app.route('/api/profilepic',methods=['POST'])
 def profilepic():
     
     if "image" not in request.files:
@@ -51,7 +51,7 @@ def profilepic():
     res = db.profilepicupdate(file.read(),request.form["email"])
     return jsonify(res[0]), res[1]
 
-@app.route('/update/profile',methods=['POST'])
+@app.route('/api/update/profile',methods=['POST'])
 def updateprofile():
     name, email, mobile, change = request.form["name"], request.form["email"], request.form["mobile"], request.form['change']
     if 'image' not in request.files or change == 'no':
@@ -61,7 +61,7 @@ def updateprofile():
         res = db.update_profile(img.stream.read(),name,email,mobile)
     return jsonify(res[0]), res[1]
 
-@app.route('/upload/file', methods=['POST'])
+@app.route('/api/upload/file', methods=['POST'])
 def upload_file():
     if "file" not in request.files:
         return jsonify({"error": "No file uploaded"}), 400
@@ -70,24 +70,24 @@ def upload_file():
     res = db.upload_file(file, name, type)
     return jsonify(res[0]), res[1]
 
-@app.route('/get/pdf', methods=['POST'])
+@app.route('/api/get/pdf', methods=['POST'])
 def get_pdf():
     res = db.files_extract()
     return jsonify(res[0]), res[1]
 
-@app.route('/get/hist',methods=['POST'])
+@app.route('/api/get/hist',methods=['POST'])
 def get_hist():
     data = request.json
     dt = db.chatbot(data['id'])
     return jsonify(dt),200
 
-@app.route('/set/hist', methods=['POST'])
+@app.route('/api/set/hist', methods=['POST'])
 def set_hist():
     data = request.json
     res = db.history_update(data['id'], data['user'], data['reply'])
     return jsonify(res), 200
     
-@app.route('/logout', methods=['POST'])
+@app.route('/api/logout', methods=['POST'])
 def logout():
     db.user['username'] = None
     db.user['email'] = None

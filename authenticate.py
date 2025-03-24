@@ -180,7 +180,7 @@ class DB:
 
         self.res = []
         for i in self.data:
-            bucket = list(self.bucket_mapping.keys())[i[1]-1]
+            bucket = list(self.bucket_mapping.keys())[i[2]-1]
             img = self.extract_photo(i[-2])
             self.res.append({'bucket': bucket, 'image': img, 'url': i[-2], 'fname': i[-1], 'hovered': False})
 

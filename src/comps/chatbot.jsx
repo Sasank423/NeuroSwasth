@@ -5,6 +5,10 @@ import Header from "./header";
 import neph from './props/chatboticons/nephrology.jpg';
 import gyna from './props/chatboticons/Gynaecology.jpg';
 import pedi from './props/chatboticons/Pediatrician.jpg';
+import gas from './props/chatboticons/gastrology.jpg';
+import neuro from './props/chatboticons/neurology.jpeg';
+import pulm from './props/chatboticons/pulmenology.jpeg';
+import cardio from './props/chatboticons/cardiology.jpeg';
 
 import './styles/chatbot.css';
 
@@ -19,13 +23,13 @@ const chatbots = [
         id : 1,
         name : 'Gastrologist',
         description : "Hi, I’m GastroAssist AI, your gastroenterology assistant. I’m here to help you with any digestive system-related concerns. Can you tell me your name, age, and gender?",
-        image : gyna
+        image : gas
     },
     {
         id : 2,
         name : 'Neurologist',
         description : "Hi, I’m NeuroAssist AI, your neurology assistant. I’m here to help you with any brain, spine, or nervous system-related concerns. Can you tell me your name, age, and gender?",
-        image : gyna
+        image : neuro
     },
     {
         id : 3,
@@ -43,16 +47,17 @@ const chatbots = [
         id : 5,
         name : 'Pulmonologist',
         description : "Hi, I’m PulmoCare AI, your pulmonology assistant. I’m here to help you with any lung or breathing-related concerns. Can you tell me your name, age, and gender?",
-        image : pedi
+        image : pulm
     },
     {
         id : 6,
         name : 'Cardiologist',
         description : "Hi, I’m CardioConsult AI, your cardiology assistant. I’m here to help you with any heart-related concerns. Can you tell me your name, age, and gender?",
-        image : pedi
+        image : cardio
     }
     
 ]
+
 
 export default function Chatbot() {
 
