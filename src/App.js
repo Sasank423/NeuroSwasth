@@ -14,13 +14,15 @@ import Summariser from './comps/summariser';
 import RecordDB from './comps/recorddb';
 import Mff from './comps/mff';
 import Sof from './comps/sof';
+import Tracker from './comps/calorie';
+import Msf from './comps/msf';
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<Chatbot />} />
+          <Route path="/" element={<Msf />} />
           <Route path="/about" element={<About />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
@@ -32,6 +34,7 @@ function App() {
             <Route path="/recorddb" element={<RecordDB />} />
             <Route path="/mff" element={<Mff />} />
             <Route path="/sof" element={<Sof />} />
+            <Route path="/tracker" element={<Tracker />} />
           </Route>
           <Route path="/*" element={<Error />} />
         </Routes>

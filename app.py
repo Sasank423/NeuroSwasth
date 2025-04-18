@@ -87,6 +87,19 @@ def set_hist():
     res = db.history_update(data['id'], data['user'], data['reply'])
     return jsonify(res), 200
     
+@app.route('/get/consumption', methods=['POST'])
+def get_consumption():
+    data = request.json
+    res = db.get_consumption()
+    return jsonify(res[0]),res[1]
+
+@app.route('/get/hosps', methods=['POST'])
+def get_hosps():
+    data = request.json
+    res = db.get_hosps(data['prompt'])
+    return jsonify(res[0]), res[1]
+
+
 @app.route('/logout', methods=['POST'])
 def logout():
     db.user['username'] = None

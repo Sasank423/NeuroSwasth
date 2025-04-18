@@ -9,15 +9,22 @@
     "cra-template": "1.2.0",
     "crypto": "^1.0.1",
     "crypto-browserify": "^3.12.1",
+    "express": "^5.1.0",
+    "file-loader": "^6.2.0",
+    "html-loader": "^5.1.0",
     "lucide-react": "^0.475.0",
+    "path-browserify": "^1.0.1",
     "pdfjs-dist": "^4.10.38",
+    "playwright": "^1.51.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-loader-spinner": "^6.1.6",
     "react-pdf": "^9.2.1",
     "react-router-dom": "^7.1.1",
     "react-scripts": "5.0.1",
-    "react-toastify": "^11.0.3"
+    "react-toastify": "^11.0.3",
+    "recharts": "^2.15.2",
+    "stagehand-framework": "^1.1.0"
   },
   "scripts": {
     "start": "react-scripts start",

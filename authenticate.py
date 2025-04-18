@@ -10,6 +10,15 @@ from pdf2image import convert_from_bytes
 import requests
 from io import BytesIO
 
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+
+import time
+
 
 class DB:
     def __init__(self, conn):
@@ -24,19 +33,19 @@ class DB:
         
         self.s3_client = boto3.client('s3')
         self.bucket_mapping = {
-                            "ct": "neuro-swasth-imaging-ct",
-                            "mri": "neuro-swasth-imaging-mri",
-                            "xray": "neuro-swasth-imaging-xray",
-                            "ultrasound": "neuro-swasth-imaging-ultrasound",
-                            "kft": "neuro-swasth-lab-kft",
-                            "lft": "neuro-swasth-lab-lft",
-                            "cbp": "neuro-swasth-lab-cbp",
-                            "bloodglucose": "neuro-swasth-lab-blood-glucose",
-                            "lipidprofile": "neuro-swasth-lab-lipid-profile",
-                            "ecg": "neuro-swasth-cardiology-ecg",
-                            "eeg": "neuro-swasth-cardiology-eeg",
-                            "echo": "neuro-swasth-cardiology-echo",
-                            "histopathologyreport": "neuro-swasth-histopathology-reports"
+                            "ct": "neuro-swasth-imaging-ct-v1",
+                            "mri": "neuro-swasth-imaging-mri-v1",
+                            "xray": "neuro-swasth-imaging-xray-v1",
+                            "ultrasound": "neuro-swasth-imaging-ultrasound-v1",
+                            "kft": "neuro-swasth-lab-kft-v1",
+                            "lft": "neuro-swasth-lab-lft-v1",
+                            "cbp": "neuro-swasth-lab-cbp-v1",
+                            "bloodglucose": "neuro-swasth-lab-blood-glucose-v1",
+                            "lipidprofile": "neuro-swasth-lab-lipid-profile-v1",
+                            "ecg": "neuro-swasth-cardiology-ecg-v1",
+                            "eeg": "neuro-swasth-cardiology-eeg-v1",
+                            "echo": "neuro-swasth-cardiology-echo-v1",
+                            "histopathologyreport": "neuro-swasth-histopathology-reports-v1"
                         }
         try:
             self.server = smtplib.SMTP("smtp.gmail.com",587)
@@ -45,6 +54,66 @@ class DB:
             self.db.start_transaction()
         except:
             pass
+
+        options = Options()
+        options.add_argument("--headless=new")
+        options.add_argument("--disable-gpu")
+        options.add_argument("--window-size=1920,1080")
+        self.driver = webdriver.Chrome(options=options)
+        self.wait = WebDriverWait(self.driver, 15)
+
+    def get_hosps(self,prompt):
+        self.driver.get("https://www.google.com/maps")
+
+        # Search for hospitals
+        search_box = self.wait.until(EC.presence_of_element_located((By.ID, "searchboxinput")))
+        search_box.send_keys(f"{prompt} hospitals near me")
+        search_box.send_keys(Keys.RETURN)
+
+        # Wait for scrollable container to load
+        while True:
+            try:
+                time.sleep(2)
+                scrollable_div = self.driver.find_element(By.XPATH, "//div[@class='m6QErb DxyBCb kA9KIf dS8AEf XiKgde ecceSd']")
+                break
+            except:
+                pass
+        # Scroll and collect hospital URLs
+        hosps = set()
+        l = 0
+        while len(hosps) <= 20:
+            links = self.driver.find_elements(By.XPATH, "//div[@class='Nv2PK tH5CWc THOPZb ']//a[@class='hfpxzc']")
+            for link in links:
+                hosps.add(link.get_attribute("href"))
+            self.driver.execute_script("arguments[0].scrollTop = arguments[0].scrollHeight", scrollable_div)
+            time.sleep(2)
+            if len(hosps) != 0 and len(hosps) == l:
+                break
+            l = len(hosps)
+        
+        data = []
+
+        for url in list(hosps):
+            self.driver.get(url)
+            try:
+                name = self.wait.until(EC.presence_of_element_located((By.XPATH, "//h1[@class='DUwDvf lfPIob']"))).text
+                rating = self.wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='F7nice ']//span"))).text
+                img = self.wait.until(EC.presence_of_element_located((By.XPATH, "//div[@class='RZ66Rb FgCUCc']//img"))).get_attribute('src')
+                
+                data.append({
+                    "name": name,
+                    "rating": rating,
+                    "img": img,
+                    "url": url
+                })
+            except Exception as e:
+                pass
+        try:
+            data.sort(key=lambda x: float(x["rating"]), reverse=True)
+        except:
+            pass
+
+        return (data,200)
 
     def send_otp(self,email,mode,user):
         otp = randint(100000, 999999)
@@ -162,6 +231,7 @@ class DB:
         try:
             self.s3_client.upload_fileobj(file, bucket_name, file_name)
             file_url = f"https://{bucket_name}.s3.amazonaws.com/{file_name}"
+            self.userid = 1
             query = "insert into records (userid, bucketid, url, filename) values(%s, %s, %s, %s)"
             self.cur.execute(query, (self.userid, bucket_id, file_url, file_name)) #change to self.userid
             self.db.commit()
@@ -171,19 +241,19 @@ class DB:
             return ({'status':'error'},401)
         
     def files_extract(self):
+        self.userid = 1
         self.cur.execute('SELECT * FROM records WHERE userid = %s ORDER BY fileid ASC', ([self.userid]))
         data = self.cur.fetchall()
         if self.data is None:
             self.data = data
-        elif self.data == data:
-            return ({'data': self.res}, 200)
+        elif self.data == data :
+            return ({'data': self.res},200)
 
         self.res = []
         for i in self.data:
-            bucket = list(self.bucket_mapping.keys())[i[1]-1]
+            bucket = list(self.bucket_mapping.keys())[i[2]-1]
             img = self.extract_photo(i[-2])
             self.res.append({'bucket': bucket, 'image': img, 'url': i[-2], 'fname': i[-1], 'hovered': False})
-
         return ({'data': self.res},200)
         
     def extract_photo(self,url):
@@ -212,16 +282,34 @@ class DB:
         return {'user': user, 'reply': reply, 'status': 'ok'}
     
     def history_update(self,id , user, reply):
-        self.userid = 1
         q = 'INSERT INTO history (userID, chatbotID, user, reply) VALUES(%s, %s, %s, %s)'
         self.cur.execute(q, (self.userid, id, user, reply))
         self.db.commit()
         return {'status':'success'}
+    
+    def get_consumption(self):
+        self.userid = 1
+        q = 'select day, carbs, protein, fats, calc from consumption where userid = %s'
+        self.cur.execute(q,(self.userid,))
+        data = self.cur.fetchall()
+        _data = {'Protien':[], 'Fats':[], 'Calcium':[],'Carbohydrates':[]}
+        for row in data:
+            row = list(row)
+            row[0] = row[0].strftime("%Y-%m-%d")
+            _data['Carbohydrates'].append({'name':row[0], 'Carbohydrates':row[1]})
+            _data['Protien'].append({'name':row[0], 'Protien':row[2]})
+            _data['Fats'].append({'name':row[0], 'Fats':row[2]})
+            _data['Calcium'].append({'name':row[0], 'Calcium':row[2]})
+
+        return (_data,200)
         
 
 
 if __name__ == "__main__":
     db = DB(mysql.connector.connect(host='localhost',user='root',password='HinokamiKagura@13',database='NeuroSwasth'))
-    print(db.history_update(0,'hi','hlo how are you'))
+    db.userid = 1
+    print(db.get_hosps('Cardiology hospitals near me'))
+    #db.cur.execute('desc consumption')
+    #print(db.cur.fetchall())
 
     

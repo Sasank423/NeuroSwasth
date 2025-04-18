@@ -5,6 +5,10 @@ import Header from "./header";
 import neph from './props/chatboticons/nephrology.jpg';
 import gyna from './props/chatboticons/Gynaecology.jpg';
 import pedi from './props/chatboticons/Pediatrician.jpg';
+import gas from './props/chatboticons/gastrology.jpg';
+import neuro from './props/chatboticons/neurology.jpeg';
+import pulm from './props/chatboticons/pulmenology.jpeg';
+import cardio from './props/chatboticons/cardiology.jpeg';
 
 import './styles/chatbot.css';
 
@@ -19,13 +23,13 @@ const chatbots = [
         id : 1,
         name : 'Gastrologist',
         description : "Hi, I’m GastroAssist AI, your gastroenterology assistant. I’m here to help you with any digestive system-related concerns. Can you tell me your name, age, and gender?",
-        image : gyna
+        image : gas
     },
     {
         id : 2,
         name : 'Neurologist',
         description : "Hi, I’m NeuroAssist AI, your neurology assistant. I’m here to help you with any brain, spine, or nervous system-related concerns. Can you tell me your name, age, and gender?",
-        image : gyna
+        image : neuro
     },
     {
         id : 3,
@@ -43,18 +47,20 @@ const chatbots = [
         id : 5,
         name : 'Pulmonologist',
         description : "Hi, I’m PulmoCare AI, your pulmonology assistant. I’m here to help you with any lung or breathing-related concerns. Can you tell me your name, age, and gender?",
-        image : pedi
+        image : pulm
     },
     {
         id : 6,
         name : 'Cardiologist',
         description : "Hi, I’m CardioConsult AI, your cardiology assistant. I’m here to help you with any heart-related concerns. Can you tell me your name, age, and gender?",
-        image : pedi
+        image : cardio
     }
     
 ]
 
 export default function Chatbot() {
+
+    const url = 'https://86c9-54-84-148-104.ngrok-free.app';
 
     const [images, setImages] = useState([]);
     const [msg,setMsg] = useState('');
@@ -67,7 +73,7 @@ export default function Chatbot() {
     useEffect(() => {
             const change = async () => {
                 try {
-                    const response = await fetch('https://7179-35-153-74-121.ngrok-free.app/set/bot', {
+                    const response = await fetch(`${url}/set/bot`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -78,6 +84,7 @@ export default function Chatbot() {
                     });
                     const data = await response.json();
                     console.log(data);
+                    
                 } catch (e) {
                     console.error('Error:', e);
                 }
@@ -85,7 +92,7 @@ export default function Chatbot() {
 
             const getHist = async () => {
                 try {
-                    const response = await fetch('http://127.0.0.1:5000/get/hist', {
+                    const response = await fetch(`${url}/get/hist`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -106,7 +113,8 @@ export default function Chatbot() {
                     alert(error.message);
                 }
             }
-
+            setBotMsg([current.description])
+            setUserMsg([])
             change();
             getHist();           
 
@@ -116,6 +124,7 @@ export default function Chatbot() {
         const files = Array.from(event.target.files);
         const imageUrls = files.map((file) => URL.createObjectURL(file));
         setImages((prev) => [...prev, ...imageUrls]);
+        
     };
 
     const removeImage = (index) => {
@@ -128,7 +137,7 @@ export default function Chatbot() {
         setUserMsg((prev) => [...prev, msg]);
         setMsg('');
         try {
-            const response = await fetch('https://7179-35-153-74-121.ngrok-free.app/chat', {
+            const response = await fetch(`${url}/chat`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -138,19 +147,7 @@ export default function Chatbot() {
                 }),
             });
             const data = await response.json();
-            try {
-                const response = await fetch('http://127.0.0.1:5000/set/hist', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ id: current.id, user: msg, reply: data.reply})
-                });
-                const data = await response.json();
-                console.log(data);
-            } catch (err) {
-                console.error('Error:', err);
-            }
+            
             setBotMsg((prev) => [...prev, data.reply]);
         } catch (e) {
             console.error('Error:', e);

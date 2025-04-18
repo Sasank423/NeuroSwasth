@@ -1,0 +1,126 @@
+.msfmain {
+    width: 100vw;
+    height: calc(100vh - 50px);
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 2%;
+}
+
+.msfip {
+    height: 12%;
+    width: 80%;
+    background-color: transparent;
+    border: solid 1px #444;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.msfop {
+    height: 80%;
+    width: 98%;
+    background-color: transparent;
+    border: solid 1px #444;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+}
+
+.msfop::-webkit-scrollbar {
+    width: 6px;
+}
+
+.msfop::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); /* Slightly visible track */
+}
+
+.msfop::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+}
+
+.msfop::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.msfop a {
+    text-decoration: none;
+    color: inherit;
+    width: 19%;
+    height: 70%;
+    background-color: transparent;
+    border: solid 1px #444;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    margin-left: 2%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.msfopitem {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    margin-left: 2%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+    
+}
+
+.msfop a:hover {
+    transform: scale(1.05);
+}
+
+.msfopitem img {
+    width: 90%;
+    height: 80%;
+    border-radius: 10px;
+    margin-top: 6%;
+}
+
+.msfopitem label {
+    margin-top: 2%;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.msfopitemdesc {
+    width: 95%;
+    height: 98%;
+    background-color: transparent;
+    margin-left: 1%;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.msfopitemdesc::-webkit-scrollbar {
+    width: 6px;
+}
+
+.msfopitemdesc::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1); /* Slightly visible track */
+}
+
+.msfopitemdesc::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 5px;
+}
+
+.msfopitemdesc::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
