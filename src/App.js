@@ -16,13 +16,15 @@ import Mff from './comps/mff';
 import Sof from './comps/sof';
 import Tracker from './comps/calorie';
 import Msf from './comps/msf';
+import Ghs from './comps/ghs';
+import Srs from './comps/srs';
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <Routes>
-          <Route path="/" element={<Msf />} />
+          <Route path="/" element={<About />} />
           <Route path="/about" element={<About />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
@@ -35,6 +37,9 @@ function App() {
             <Route path="/mff" element={<Mff />} />
             <Route path="/sof" element={<Sof />} />
             <Route path="/tracker" element={<Tracker />} />
+            <Route path="/msf" element={<Msf />} />
+            <Route path="/ghs" element={<Ghs />} />
+            <Route path="/srs" element={<Srs />} />
           </Route>
           <Route path="/*" element={<Error />} />
         </Routes>

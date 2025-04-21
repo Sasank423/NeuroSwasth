@@ -60,8 +60,6 @@ const chatbots = [
 
 export default function Chatbot() {
 
-    const url = 'https://86c9-54-84-148-104.ngrok-free.app';
-
     const [images, setImages] = useState([]);
     const [msg,setMsg] = useState('');
     const [current,setCurrent] = useState(chatbots[0]);
@@ -73,7 +71,7 @@ export default function Chatbot() {
     useEffect(() => {
             const change = async () => {
                 try {
-                    const response = await fetch(`${url}/set/bot`, {
+                    const response = await fetch('/api/set/bot', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -92,7 +90,7 @@ export default function Chatbot() {
 
             const getHist = async () => {
                 try {
-                    const response = await fetch(`${url}/get/hist`, {
+                    const response = await fetch('/api/get/hist', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -137,7 +135,7 @@ export default function Chatbot() {
         setUserMsg((prev) => [...prev, msg]);
         setMsg('');
         try {
-            const response = await fetch(`${url}/chat`, {
+            const response = await fetch('/api/chat', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -147,7 +145,6 @@ export default function Chatbot() {
                 }),
             });
             const data = await response.json();
-            
             setBotMsg((prev) => [...prev, data.reply]);
         } catch (e) {
             console.error('Error:', e);

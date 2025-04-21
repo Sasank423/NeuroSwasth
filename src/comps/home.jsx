@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useAuth } from "./utils/AuthContext";
 
-import { Bot, TriangleAlert, Database, ChartNoAxesColumn, UtensilsCrossed, Volleyball, TrendingUpDown, Search, BookOpen, ShoppingCart, SquareActivity, AudioWaveform } from "lucide-react";
+import { Bot, TriangleAlert, Database, ChartNoAxesColumn, UtensilsCrossed, Volleyball, Search, BookOpen, ShoppingCart, AudioWaveform } from "lucide-react";
 
 import show_msg from "./utils/Alerts";
 import { ToastContainer } from "react-toastify";
@@ -27,7 +27,7 @@ const featuresData = [
       "feature": "Personalized Alerts",
       "description": "Receive tailored health notifications based on your medical history and lifestyle.",
       "img": "https://www.infoprolearning.com/wp-content/uploads/2024/11/AI-Powered-Personalization-Transforming-the-Future-of-Learning-Through-MLS-without-logo.webp",
-      "icon" : <TriangleAlert />    
+      "icon" : <TriangleAlert />
     },
   {
       "feature": "Secure Medical Record Databank",
@@ -47,19 +47,15 @@ const featuresData = [
       "feature": "Supplement Recommendations",
       "description": "Personalized supplement suggestions based on dietary needs and health goals.",
       "img": "https://www.shutterstock.com/image-photo/hand-touching-high-tech-global-600nw-2323228599.jpg",
-      "icon" : <UtensilsCrossed />
+      "icon" : <UtensilsCrossed />,
+      "route": '/srs'
   },
   {
       "feature": "Gamified Health Score",
       "description": "Track and improve your health through interactive goals and rewards.",
       "img": "https://img.freepik.com/free-vector/abstract-background-with-modern-halftone-dots-design_1048-13747.jpg",
-      "icon" : <Volleyball />
-  },
-  {
-      "feature": "Disease Prediction",
-      "description": "AI-based early detection of potential health risks using medical data patterns.",
-      "img": "https://img.freepik.com/premium-vector/corona-virus-3d-pathogen-covid-19-virus-infections-blue-background_90220-20.jpg",
-      "icon" : <TrendingUpDown />
+      "icon" : <Volleyball />,
+      "route": '/ghs'
   },
   {
       "feature": "Healthy Facility Finder",
@@ -79,19 +75,15 @@ const featuresData = [
       "feature": "Online Medicine Shopping ",
       "description": "A centralized platform to compare and purchase medicines online.",
       "img": "https://www.wdxtechnologies.com/wp-content/uploads/2021/12/AI-healthcare-01.jpg",
-      "icon" : <ShoppingCart />
-  },
-  {
-      "feature": "PCOS Care",
-      "description": "Specialized guidance and tracking tools for managing PCOS effectively.",
-      "img": "https://www.shutterstock.com/image-photo/artificial-intelligence-ai-healthcare-concept-600nw-2476602375.jpg",
-      "icon" : <SquareActivity />
+      "icon" : <ShoppingCart />,
+      "route" : '/msf'
   },
   {
       "feature": "Calorie Tracker",
       "description": "Monitor your daily calorie intake and set personalized diet goals.",
       "img": "https://t4.ftcdn.net/jpg/03/01/46/11/360_F_301461106_EXXsPkG6yiOPO4Lb2mGyzNjkcWIg39w7.jpg",
-      "icon" : <AudioWaveform />
+      "icon" : <AudioWaveform />,
+      "route" : '/tracker'
   }
 ]
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 
-import { Bot, TriangleAlert, Database, ChartNoAxesColumn, UtensilsCrossed, Volleyball, TrendingUpDown, Search, BookOpen, ShoppingCart, SquareActivity, AudioWaveform } from "lucide-react";
+import { Bot, TriangleAlert, Database, ChartNoAxesColumn, UtensilsCrossed, Volleyball, Search, BookOpen, ShoppingCart, AudioWaveform } from "lucide-react";
 
 import Header from "./header";
 import Spinner from './styles/spinner'
@@ -48,12 +48,6 @@ const featuresData = [
       "icon" : <Volleyball />
   },
   {
-      "feature": "Disease Prediction",
-      "description": "AI-based early detection of potential health risks using medical data patterns.",
-      "img": "https://img.freepik.com/premium-vector/corona-virus-3d-pathogen-covid-19-virus-infections-blue-background_90220-20.jpg",
-      "icon" : <TrendingUpDown />
-  },
-  {
       "feature": "Healthy Facility Finder",
       "description": "Locate nearby hospitals, clinics, and fitness centers based on your needs.",
       "img": "https://t4.ftcdn.net/jpg/03/01/46/11/360_F_301461106_EXXsPkG6yiOPO4Lb2mGyzNjkcWIg39w7.jpg",
@@ -70,12 +64,6 @@ const featuresData = [
       "description": "A centralized platform to compare and purchase medicines online.",
       "img": "https://www.wdxtechnologies.com/wp-content/uploads/2021/12/AI-healthcare-01.jpg",
       "icon" : <ShoppingCart />
-  },
-  {
-      "feature": "PCOS Care",
-      "description": "Specialized guidance and tracking tools for managing PCOS effectively.",
-      "img": "https://www.shutterstock.com/image-photo/artificial-intelligence-ai-healthcare-concept-600nw-2476602375.jpg",
-      "icon" : <SquareActivity />
   },
   {
       "feature": "Calorie Tracker",

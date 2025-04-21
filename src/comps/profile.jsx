@@ -48,7 +48,7 @@ export default function Profile() {
         formData.append("name",name);
         formData.append('change',picChange)
         try {
-            const response = await fetch("http://127.0.0.1:5000/update/profile", {
+            const response = await fetch("/api/update/profile", {
                 method: "POST",
                 body: formData,
             });

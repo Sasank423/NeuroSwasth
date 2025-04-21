@@ -74,7 +74,7 @@ export default function Otp({email,type,username,otp}) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const response = await fetch('http://127.0.0.1:5000/otp', {
+          const response = await fetch('/api/otp', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json'
@@ -123,7 +123,7 @@ export default function Otp({email,type,username,otp}) {
       formData.append("email", email);
   
       try {
-        const response = await fetch("http://127.0.0.1:5000/profilepic", {
+        const response = await fetch("/api/profilepic", {
           method: "POST",
           body: formData,
         });

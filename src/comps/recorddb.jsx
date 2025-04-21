@@ -64,7 +64,7 @@ export default function RecordDB() {
             formData.append('name', fname);
             formData.append('type', selectedValue);
 
-            const response = await fetch('http://127.0.0.1:5000/upload/file', {
+            const response = await fetch('/api/upload/file', {
                 method: 'POST',
                 body: formData
             });
@@ -90,7 +90,7 @@ export default function RecordDB() {
         const fetchData = async () => {
             setLoading(true);
             try {
-                const response = await fetch("http://127.0.0.1:5000/get/pdf", {
+                const response = await fetch("/api/get/pdf", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ url: '' }),

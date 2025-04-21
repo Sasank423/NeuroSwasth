@@ -13,9 +13,37 @@
     height: 12%;
     width: 80%;
     background-color: transparent;
-    border: solid 1px #444;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-top: 1%;
+}
+
+.msfip label {
+    position: absolute;
+    top: -7px;
+    left: 135px;
+    font-size: 15px;
+}
+
+.msfip input {
+    background-color: transparent;
+    border: solid 1px #333;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+    width: 70%;
+    height: 40%;
+    color: white;
+}
+
+.msfip button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    margin-left: 2px;
+    margin-top: 4px;
+    cursor: pointer;
 }
 
 .msfop {
@@ -27,6 +55,12 @@
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
+}
+
+.msfophide {
+    height: 80%;
+    width: 98%;
+    opacity: 0%;
 }
 
 .msfop::-webkit-scrollbar {
